@@ -1,0 +1,307 @@
+{
+  "code": 200,
+  "currentTime": 1517634206292,
+  "data": {
+    "limitExceeded": false,
+    "list": [
+      {
+        "code": "21730",
+        "direction": "N",
+        "id": "1_21730",
+        "lat": 47.584736,
+        "locationType": 0,
+        "lon": -122.321289,
+        "name": "Airport Way S & S Hill St",
+        "routeIds": [
+          "1_100023"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "21740",
+        "direction": "W",
+        "id": "1_21740",
+        "lat": 47.586273,
+        "locationType": 0,
+        "lon": -122.3218,
+        "name": "S Holgate St & Airport Way S",
+        "routeIds": [
+          "1_100023"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "21850",
+        "direction": "SE",
+        "id": "1_21850",
+        "lat": 47.592117,
+        "locationType": 0,
+        "lon": -122.323792,
+        "name": "Airport Way S & S Royal Brougham Way",
+        "routeIds": [
+          "40_100232",
+          "40_100236"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "21860",
+        "direction": "S",
+        "id": "1_21860",
+        "lat": 47.585243,
+        "locationType": 0,
+        "lon": -122.321495,
+        "name": "Airport Way S & S Holgate St",
+        "routeIds": [
+          "1_100023"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3500",
+        "direction": "N",
+        "id": "1_3500",
+        "lat": 47.584503,
+        "locationType": 0,
+        "lon": -122.314583,
+        "name": "14th Ave S & S Hill St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3515",
+        "direction": "N",
+        "id": "1_3515",
+        "lat": 47.586605,
+        "locationType": 0,
+        "lon": -122.314568,
+        "name": "14th Ave S & S Holgate St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3530",
+        "direction": "W",
+        "id": "1_3530",
+        "lat": 47.588509,
+        "locationType": 0,
+        "lon": -122.315208,
+        "name": "S Massachusetts St & 14th Ave S",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3541",
+        "direction": "N",
+        "id": "1_3541",
+        "lat": 47.58876,
+        "locationType": 0,
+        "lon": -122.317177,
+        "name": "12th Ave S & S Massachusetts St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3550",
+        "direction": "N",
+        "id": "1_3550",
+        "lat": 47.590248,
+        "locationType": 0,
+        "lon": -122.317177,
+        "name": "12th Ave S & S Atlantic St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3570",
+        "direction": "N",
+        "id": "1_3570",
+        "lat": 47.592716,
+        "locationType": 0,
+        "lon": -122.317177,
+        "name": "12th Ave S & S Judkins St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3730",
+        "direction": "SE",
+        "id": "1_3730",
+        "lat": 47.592991,
+        "locationType": 0,
+        "lon": -122.31501,
+        "name": "Golf Dr S & 14th Ave S",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3740",
+        "direction": "S",
+        "id": "1_3740",
+        "lat": 47.591186,
+        "locationType": 0,
+        "lon": -122.314949,
+        "name": "14th Ave S & S Judkins St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3760",
+        "direction": "S",
+        "id": "1_3760",
+        "lat": 47.588184,
+        "locationType": 0,
+        "lon": -122.314964,
+        "name": "14th Ave S & S Massachusetts St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3770",
+        "direction": "S",
+        "id": "1_3770",
+        "lat": 47.586136,
+        "locationType": 0,
+        "lon": -122.314774,
+        "name": "14th Ave S & S Holgate St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      },
+      {
+        "code": "3778",
+        "direction": "S",
+        "id": "1_3778",
+        "lat": 47.584339,
+        "locationType": 0,
+        "lon": -122.314789,
+        "name": "14th Ave S & S Hill St",
+        "routeIds": [
+          "1_100210",
+          "1_100249"
+        ],
+        "wheelchairBoarding": "UNKNOWN"
+      }
+    ],
+    "outOfRange": false,
+    "references": {
+      "agencies": [
+        {
+          "disclaimer": "",
+          "email": "",
+          "fareUrl": "",
+          "id": "1",
+          "lang": "EN",
+          "name": "Metro Transit",
+          "phone": "206-553-3000",
+          "privateService": false,
+          "timezone": "America/Los_Angeles",
+          "url": "http://metro.kingcounty.gov"
+        },
+        {
+          "disclaimer": "",
+          "email": "",
+          "fareUrl": "",
+          "id": "40",
+          "lang": "EN",
+          "name": "Sound Transit",
+          "phone": "1-888-889-6368",
+          "privateService": false,
+          "timezone": "America/Los_Angeles",
+          "url": "http://www.soundtransit.org"
+        }
+      ],
+      "routes": [
+        {
+          "agencyId": "1",
+          "color": "",
+          "description": "Tukwila International Blvd Sta - Downtown Seattle",
+          "id": "1_100023",
+          "longName": "",
+          "shortName": "124",
+          "textColor": "",
+          "type": 3,
+          "url": "http://metro.kingcounty.gov/schedules/124/n0.html"
+        },
+        {
+          "agencyId": "40",
+          "color": "",
+          "description": "Woodinville - Seattle",
+          "id": "40_100232",
+          "longName": "Woodinville - Seattle",
+          "shortName": "522",
+          "textColor": "",
+          "type": 3,
+          "url": "http://www.soundtransit.org/Schedules/ST-Express-Bus/522"
+        },
+        {
+          "agencyId": "40",
+          "color": "",
+          "description": "Redmond - Seattle",
+          "id": "40_100236",
+          "longName": "Redmond - Seattle",
+          "shortName": "545",
+          "textColor": "",
+          "type": 3,
+          "url": "http://www.soundtransit.org/Schedules/ST-Express-Bus/545"
+        },
+        {
+          "agencyId": "1",
+          "color": "",
+          "description": "Othello Station - Beacon Hill - Downtown Seattle",
+          "id": "1_100210",
+          "longName": "",
+          "shortName": "36",
+          "textColor": "",
+          "type": 3,
+          "url": "http://metro.kingcounty.gov/schedules/036/n0.html"
+        },
+        {
+          "agencyId": "1",
+          "color": "",
+          "description": "Westwood Village - Georgetown - Broadway",
+          "id": "1_100249",
+          "longName": "",
+          "shortName": "60",
+          "textColor": "",
+          "type": 3,
+          "url": "http://metro.kingcounty.gov/schedules/060/n0.html"
+        }
+      ],
+      "situations": [],
+      "stops": [],
+      "trips": []
+    }
+  },
+  "text": "OK",
+  "version": 2
+}

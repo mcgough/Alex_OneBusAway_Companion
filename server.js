@@ -1,73 +1,32 @@
-require('dotenv').config();
-const axios = require("axios");
-const chalk = require("chalk");
-const differenceInMinutes = require('date-fns/difference_in_minutes');
-const apiRoot = "http://api.pugetsound.onebusaway.org/api/";
-const coords = {
-  lat: "47.588656",
-  lon: "-122.318176"
-};
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const lib = require("./lib");
+const getArrivals = lib.getStopArrivalsDepartures;
+const parseArrivals = lib.parseArrivals;
+const createSpeech = lib.createSpeech;
+const stopId = "1_3541";
 
-const getStopArrivalsDepartures = async stop => {
+const alexaVerify = lib.alexaVerify;
+
+app.use(bodyParser.json());
+app.post("/getArrivals", async (req, res) => {
   try {
-    const { data } = await axios.get(
-      `${apiRoot}where/arrivals-and-departures-for-stop/${stop[0].id}?key=${process.env.apiKey}`
-    );
-    return data.data.entry;
+    const data = await getArrivals(stopId);
+    const parsedData = parseArrivals(data);
+    const speech = createSpeech(parsedData);
+    res.json({
+      "version": "1.0",
+      "response": {
+        "shouldEndSession": true,
+        "outputSpeech": {
+          "type": "SSML",
+          "ssml": speech
+        }
+      }
+    });
   } catch (err) {
-    return { arrivalsAndDepartures: [], error: 'Request Limit' };
+    res.json({ err });
   }
-};
-
-const getStopsForLocation = async coords => {
-  try {
-    const { data } = await axios.get(
-      `${apiRoot}where/stops-for-location.json?key=${process.env.apiKey}&lat=${coords.lat}&lon=${coords.lon}`
-    );
-    return data; 
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getRoute = async route => {
-  try {
-    const response = await axios.get(
-      `${apiRoot}where/route/${route}.json?key=${process.env.apiKey}`
-    );
-    return response.data.data;
-  } catch (err) {
-    console.log(`${chalk.red('Error:')} ${err.response.data.text}`);
-  }
-};
-
-const isMyStop = (stop) => {
-  const exp = new RegExp('12th Ave S & S Massachusetts St', "g");
-  return exp.test(stop.name) && stop.direction === "N";
-};
-
-const printArrivalTime = (arrivalTime) => {
-  console.log(
-    chalk.blue(arrivalTime.routeShortName),
-    `${differenceInMinutes(arrivalTime.predictedArrivalTime, new Date())} minutes`
-  );
-};
-
-const main = async () => {
-  try {
-    const stops = await getStopsForLocation(coords);
-    const myStops = stops.data.list.filter(isMyStop);
-    const results = await getStopArrivalsDepartures(myStops);
-    const { arrivalsAndDepartures } = results;
-    // console.log(arrivalsAndDepartures)
-    if (arrivalsAndDepartures.length) {
-      arrivalsAndDepartures.forEach(printArrivalTime);
-    } else {
-      throw new Error(results.error);
-    }
-  } catch (err) {
-    console.log(chalk.red(err));
-  }
-};
-
-main();
+});
+app.listen(3000);
