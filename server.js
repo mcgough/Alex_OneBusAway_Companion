@@ -9,19 +9,26 @@ const stopId = "1_3541";
 
 const alexaVerify = lib.alexaVerify;
 
-app.use(bodyParser.json());
-app.post("/getArrivals", async (req, res) => {
+app.use(
+  bodyParser.json({
+    verify: function getRawBody(req, res, buf) {
+      req.rawBody = buf.toString();
+    }
+  })
+);
+
+app.post("/", alexaVerify, async (req, res) => {
   try {
     const data = await getArrivals(stopId);
     const parsedData = parseArrivals(data);
     const speech = createSpeech(parsedData);
     res.json({
-      "version": "1.0",
-      "response": {
-        "shouldEndSession": true,
-        "outputSpeech": {
-          "type": "SSML",
-          "ssml": speech
+      version: "1.0",
+      response: {
+        shouldEndSession: true,
+        outputSpeech: {
+          type: "SSML",
+          ssml: speech
         }
       }
     });
