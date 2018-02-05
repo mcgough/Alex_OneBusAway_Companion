@@ -1,13 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const lib = require("./lib");
-const getArrivals = lib.getStopArrivalsDepartures;
-const parseArrivals = lib.parseArrivals;
-const createSpeech = lib.createSpeech;
-const stopId = "1_3541";
+const { alexaVerify } = require("./lib");                     
+const { getarrivals, getnext } = require('./intents');
 
-const alexaVerify = lib.alexaVerify;
+const stopId = "1_3541";
 
 app.use(
   bodyParser.json({
@@ -18,22 +15,17 @@ app.use(
 );
 
 app.post("/", alexaVerify, async (req, res) => {
-  try {
-    const data = await getArrivals(stopId);
-    const parsedData = parseArrivals(data);
-    const speech = createSpeech(parsedData);
-    res.json({
-      version: "1.0",
-      response: {
-        shouldEndSession: true,
-        outputSpeech: {
-          type: "SSML",
-          ssml: speech
-        }
-      }
-    });
-  } catch (err) {
-    res.json({ err });
+  const { intent } = req.body.request;
+  switch (intent.name) {
+    case 'getarrivals':
+      res.json(await getarrivals(stopId, req.body));
+      break;
+    case 'getnext':
+      res.json(getnext(req.body));
+      break;
+    default:
+      break;
   }
 });
 app.listen(3000);
+

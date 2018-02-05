@@ -6,7 +6,6 @@ const apiRoot = "http://api.pugetsound.onebusaway.org/api/";
 const alexaVerifier = require("alexa-verifier");
 
 exports.alexaVerify = (req, res, next) => {
-  console.log('verifying');
   alexaVerifier(
     req.headers.signaturecertchainurl,
     req.headers.signature,
@@ -29,17 +28,25 @@ const getRouteAndTime = data => {
 };
 
 exports.createSpeech = data => {
-  const validBuses = data.filter(time => time.arrival > 0);
-  const results = validBuses.reduce((result, bus) => {
-    result += `The ${bus.routeName} is arriving in ${bus.arrival} minutes <break time="1s"/> `;
-    return result
-  }, "")
+  const validArrivals = data.filter(time => time.arrival > 0);
+  const results = validArrivals.reduce((result, bus, index) => {
+    result +=
+      index === 0
+        ? `The next ${bus.routeName} is arriving in ${bus.arrival} ${bus.arrival >
+          1
+            ? "minutes"
+            : "minute"}<break time="1s"/> `
+        : "";
+    return result;
+  }, "");
   return `<speak>${results}</speak>`;
-}
+};
 
-exports.parseArrivals = data => {
+exports.parseArrivals = (data, route) => {
   const { arrivalsAndDepartures } = data;
-  return arrivalsAndDepartures.map(arrival => getRouteAndTime(arrival));
+  return arrivalsAndDepartures
+    .filter(arrival => arrival.routeShortName === route)
+    .map(arrival => getRouteAndTime(arrival));
 };
 
 exports.Stop = class Stop {
