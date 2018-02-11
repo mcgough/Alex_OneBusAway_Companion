@@ -8,7 +8,7 @@ class IntentResponse {
     this.version = "1.0";
     this.sessionAttributes = sessionData;
     this.response = {
-      shouldEndSesssion: shouldEnd,
+      shouldEndSession: shouldEnd,
       outputSpeech: {
         type: "SSML",
         ssml: speech
@@ -19,14 +19,18 @@ class IntentResponse {
 
 const intents = {
   getarrivals: async (stopId, body) => {
-    const route = body.request.intent.slots.Number.value;
-    try {
-      const data = await getArrivals(stopId);
-      const parsedData = parseArrivals(data, route);
-      return new IntentResponse(createSpeech(parsedData), { parsedData, stopId }, false);
-    } catch (err) {
-      return err;
+    const { Route } = body.request.intent.slots;
+    if (Route.value !== '?') {
+      try {
+        const data = await getArrivals(stopId);
+        const parsedData = parseArrivals(data, Route.value);
+        return new IntentResponse(createSpeech(parsedData), { parsedData, stopId }, false);
+      } catch (err) {
+        return err;
+      }
     }
+    const noRouteHeard = '<speak>I\'m sorry which route are you asking about?</speak>';
+    return new IntentResponse(noRouteHeard, {}, false);
   },
   getnext: body => {
     const { attributes } = body.session;
