@@ -5,10 +5,6 @@ const db = require('./models');
 const { alexaVerify } = require("./lib");                     
 const { getarrivals, getnext } = require('./intents');
 
-const stopId = "1_3541";
-
-db.User.find({ stop_id: '3541'}, (err, user) => console.log(user));
-
 app.use(
   bodyParser.json({
     verify: function getRawBody(req, res, buf) {
@@ -18,11 +14,14 @@ app.use(
 );
 
 app.post("/", alexaVerify, async (req, res) => {
+  const { userId } = req.body.session.user;
   const { intent } = req.body.request;
+  const user = await db.User.find({ device_id: userId });
+  const stop_id = user[0].stop_id; 
   if (intent !== undefined) {
     switch (intent.name) {
       case 'getarrivals':
-        return res.json(await getarrivals(stopId, req.body));
+        return res.json(await getarrivals(`1_${stop_id}`, req.body));
       case 'getnext':
         return res.json(getnext(req.body));
       default:
