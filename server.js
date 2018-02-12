@@ -1,9 +1,8 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
-const db = require('./models');
+const bodyParser = require("body-parser");
 const { alexaVerify } = require("./lib");                     
-const { getarrivals, getnext } = require('./intents');
+const { intentController } = require('./intents/intent-controller');
 
 app.use(
   bodyParser.json({
@@ -13,23 +12,13 @@ app.use(
   })
 );
 
-app.post("/", alexaVerify, async (req, res) => {
-  const { userId } = req.body.session.user;
+app.post("/", alexaVerify, (req, res) => {
   const { intent } = req.body.request;
-  const user = await db.User.find({ device_id: userId });
-  const stop_id = user[0].stop_id; 
-  if (intent !== undefined) {
-    switch (intent.name) {
-      case 'getarrivals':
-        return res.json(await getarrivals(`1_${stop_id}`, req.body));
-      case 'getnext':
-        return res.json(getnext(req.body));
-      default:
-        return res.json({});
-    }
-  } 
-  return res.json({});
+  return intent !== undefined 
+    ? intentController(intent, req, res) 
+    : res.json({});
 });
+
 app.listen(3000);
 
 
