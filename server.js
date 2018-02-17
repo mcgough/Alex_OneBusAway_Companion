@@ -15,7 +15,7 @@ app.use(
 app.post("/", alexaVerify, (req, res) => {
   const { intent } = req.body.request;
   return intent !== undefined 
-    ? intentController(intent, req, res) 
+    ? intentController(intent.name, req, res) 
     : res.json({});
 });
 

@@ -1,4 +1,5 @@
 const lib = require("../lib");
+const db = require('../models');
 const getArrivals = lib.getStopArrivalsDepartures;
 const parseArrivals = lib.parseArrivals;
 const createSpeech = lib.createSpeech;
@@ -18,7 +19,7 @@ class IntentResponse {
 }
 
 const intents = {
-  getarrivals: async (stopId, body) => {
+  getArrivals: async (stopId, body) => {
     const { Route } = body.request.intent.slots;
     if (Route.value !== '?') {
       try {
@@ -32,26 +33,22 @@ const intents = {
     const noRouteHeard = '<speak>I\'m sorry which route are you asking about?</speak>';
     return new IntentResponse(noRouteHeard, {}, false);
   },
-  getnext: body => {
+  getNext: body => {
     const { attributes } = body.session;
     const speech = `<speak>After that the next bus will be arriving in ${attributes.parsedData[1].arrival} minutes</speak>`;
     return new IntentResponse(speech, attributes.parsedData);
   },
-  getstop: body => {
-    const speech =
-      `<speak>
-        It seems that you have not set your stop yet
-          <break time=".5s">
-        Would you like to set your bus stop now?
-          <break time=".5s">
-        If so, I will need the four digit stop number, 
-        which can be found either on the sign at your bus stop
-        or in the one bus away app
-          <break time="1s">
-        Would you like to set your bus stop now?
-      </speak>`
-    return new IntentResponse(createSpeech(speech, {}, false));
-  }
+  notUser: body => {
+    const speech = `<speak>What is your bus stop four digit id? It can be found either in the one bus away app or on the sign at the stop.</speak>`;
+    return new IntentResponse(speech, {}, false);
+  },
+  setUserStop: async (body, deviceId) => {
+    const { StopId } = body.request.intent.slots;
+    if (StopId.value !== '?') {
+      const user = await db.User.create({ stop_id: StopId.value, device_id: deviceId });
+      console.log(user);
+    }
+  },
 };
 
 module.exports = intents;
