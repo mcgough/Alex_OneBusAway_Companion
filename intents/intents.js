@@ -44,7 +44,8 @@ const intents = {
     const { attributes } = body.session;
     const speech = `
       <speak>
-        After that the next bus will be arriving in ${attributes.parsedData[1].arrival} minutes
+        After that, the next bus will be arriving in 
+        ${attributes.parsedData[1].arrival} minutes.
       </speak>`;
     return new IntentResponse(speech, attributes.parsedData);
   },
@@ -71,7 +72,7 @@ const intents = {
         );
         speech = `
           <speak>
-            Your stop has been set to ${parsedStopId}
+            Your stop has been set to ${parsedStopId}.
           </speak>`;
         return new IntentResponse(speech, {}, true);
       } catch (err) {
