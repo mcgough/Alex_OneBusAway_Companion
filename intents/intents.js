@@ -1,6 +1,6 @@
 const lib = require("../lib");
 const db = require('../models');
-const getArrivals = lib.getStopArrivalsDepartures;
+const getStopArrivals = lib.getStopArrivalsDepartures;
 const parseArrivals = lib.parseArrivals;
 const createSpeech = lib.createSpeech;
 
@@ -20,12 +20,17 @@ class IntentResponse {
 
 const intents = {
   getArrivals: async (stopId, body) => {
+    console.log(stopId);
     const { Route } = body.request.intent.slots;
     if (Route.value !== '?') {
       try {
-        const data = await getArrivals(stopId);
+        const data = await getStopArrivals(stopId);
         const parsedData = parseArrivals(data, Route.value);
-        return new IntentResponse(createSpeech(parsedData), { parsedData, stopId }, false);
+        return new IntentResponse(
+          createSpeech(parsedData),
+          { parsedData, stopId },
+          false,
+        );
       } catch (err) {
         return err;
       }
@@ -42,11 +47,25 @@ const intents = {
     const speech = `<speak>What is your bus stop four digit id? It can be found either in the one bus away app or on the sign at the stop.</speak>`;
     return new IntentResponse(speech, {}, false);
   },
-  setUserStop: async (body, deviceId) => {
+  setUserStop: async (body, deviceId, userId) => {
     const { StopId } = body.request.intent.slots;
+    let speech;
     if (StopId.value !== '?') {
-      const user = await db.User.create({ stop_id: StopId.value, device_id: deviceId });
-      console.log(user);
+      try {
+        const data = await getStopArrivals(`1_${StopId.value}`);
+        if (!data.arrivalsAndDepartures.length) throw new Error('Could not find stop');
+        const user = await db.User.findOneAndUpdate(
+          { device_id: deviceId },
+          { stop_id: StopId.value },
+          { upsert: true },
+        );
+        speech = `<speak>Your stop has been set to ${StopId.value}</speak>`;
+        return new IntentResponse(speech, {}, true);
+      } catch (err) {
+        console.log('error:', err);
+        speech = `<speak>I could not find a bus stop with the id of ${StopId.value.split('').join(' ')}</speak>`
+        return new IntentResponse(speech, {}, true);
+      }
     }
   },
 };

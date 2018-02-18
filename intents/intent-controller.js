@@ -11,14 +11,18 @@ exports.intentController = async (intent, req, res) => {
   const { userId } = req.body.session.user;
   const [user] = await db.User.find({ device_id: userId });
   if (user) {
-    const { stop_id } = user;
+    const { stop_id, _id} = user;
     switch (intent) {
       case 'getarrivals':
-        return res.json(await getArrivals(`1_${stop_id}`, req.body));
+        return res.json(
+          await getArrivals(`1_${stop_id}`, req.body)
+        );
       case 'getnext':
         return res.json(getNext(req.body));
-      case 'setuserstop':
-        return res.json(setUserStop(req.body, userId));
+      case 'setUserStop':
+        return res.json(
+          await setUserStop(req.body, userId, _id)
+        );
       default:
         return res.json({});
     }
