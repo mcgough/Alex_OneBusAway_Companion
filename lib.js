@@ -20,6 +20,10 @@ exports.alexaVerify = (req, res, next) => {
   );
 };
 
+/**
+ * Returns route name and minutes till arrival
+ * @param  { object } data - Stop info
+ */
 const getRouteAndTime = data => {
   return {
     routeName: data.routeShortName,
@@ -27,6 +31,10 @@ const getRouteAndTime = data => {
   };
 };
 
+/**
+ * @param  { array } data
+ * @return { string }
+ */
 exports.createSpeech = data => {
   const validArrivals = data.filter(time => time.arrival > 0);
   const results = validArrivals.reduce((result, bus, index) => {
@@ -42,6 +50,10 @@ exports.createSpeech = data => {
   return `<speak>${results}</speak>`;
 };
 
+/**
+ * @param  { object } data
+ * @param  { string } route
+ */
 exports.parseArrivals = (data, route) => {
   const { arrivalsAndDepartures } = data;
   return arrivalsAndDepartures
@@ -84,6 +96,10 @@ exports.Stop = class Stop {
   }
 };
 
+/**
+ * @param  { string } id
+ * @returns { array }
+ */
 exports.getStopArrivalsDepartures = async id => {
   try {
     const { data } = await axios.get(
@@ -100,6 +116,9 @@ exports.getStopArrivalsDepartures = async id => {
   }
 };
 
+/**
+ * @param  { object } coords - lat, lon
+ */
 exports.getStopsForLocation = async coords => {
   try {
     const { data } = await axios.get(
@@ -112,6 +131,9 @@ exports.getStopsForLocation = async coords => {
   }
 };
 
+/**
+ * @param  { string } route
+ */
 exports.getRoute = async route => {
   try {
     const response = await axios.get(
@@ -123,11 +145,17 @@ exports.getRoute = async route => {
   }
 };
 
+/**
+ * @param  { object } stop
+ */
 exports.isMyStop = stop => {
   const exp = new RegExp("12th Ave S & S Massachusetts St", "g");
   return exp.test(stop.name) && stop.direction === "N";
 };
 
+/**
+ * @param  { objects } arrivalTime
+ */
 exports.printArrivalTime = arrivalTime => {
   console.log(
     chalk.blue(arrivalTime.routeShortName),
