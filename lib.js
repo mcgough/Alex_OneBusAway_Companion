@@ -61,6 +61,11 @@ exports.parseArrivals = (data, route) => {
     .map(arrival => getRouteAndTime(arrival));
 };
 
+  /**
+   * Represents bus stop
+   * @constructor
+   * @param  { object } stop
+   */
 exports.Stop = class Stop {
   constructor(stop) {
     this.id = stop.id;
