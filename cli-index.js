@@ -1,4 +1,4 @@
-const lib = require('./lib');
+const lib = require("./lib");
 const getStopsForLocation = lib.getStopsForLocation;
 const isMyStop = lib.isMyStop;
 const Stop = lib.Stop;

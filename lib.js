@@ -40,10 +40,9 @@ exports.createSpeech = data => {
   const results = validArrivals.reduce((result, bus, index) => {
     result +=
       index === 0
-        ? `The next ${bus.routeName} is arriving in ${bus.arrival} ${bus.arrival >
-          1
-            ? "minutes"
-            : "minute"}<break time="1s"/> `
+        ? `The next ${bus.routeName} is arriving in ${bus.arrival} ${
+            bus.arrival > 1 ? "minutes" : "minute"
+          }<break time="1s"/> `
         : "";
     return result;
   }, "");
@@ -61,11 +60,11 @@ exports.parseArrivals = (data, route) => {
     .map(arrival => getRouteAndTime(arrival));
 };
 
-  /**
-   * Represents bus stop
-   * @constructor
-   * @param  { object } stop
-   */
+/**
+ * Represents bus stop
+ * @constructor
+ * @param  { object } stop
+ */
 exports.Stop = class Stop {
   constructor(stop) {
     this.id = stop.id;
@@ -74,8 +73,7 @@ exports.Stop = class Stop {
   async getArrivalsDepartures() {
     try {
       const { data } = await axios.get(
-        `${apiRoot}where/arrivals-and-departures-for-stop/${this
-          .id}?key=${process.env.apiKey}`
+        `${apiRoot}where/arrivals-and-departures-for-stop/${this.id}?key=${process.env.apiKey}`
       );
       return data.data.entry;
     } catch (err) {
@@ -108,8 +106,7 @@ exports.Stop = class Stop {
 exports.getStopArrivalsDepartures = async id => {
   try {
     const { data } = await axios.get(
-      `${apiRoot}where/arrivals-and-departures-for-stop/${id}?key=${process.env
-        .apiKey}`
+      `${apiRoot}where/arrivals-and-departures-for-stop/${id}?key=${process.env.apiKey}`
     );
     return data.data.entry;
   } catch (err) {
@@ -127,8 +124,7 @@ exports.getStopArrivalsDepartures = async id => {
 exports.getStopsForLocation = async coords => {
   try {
     const { data } = await axios.get(
-      `${apiRoot}where/stops-for-location.json?key=${process.env
-        .apiKey}&lat=${coords.lat}&lon=${coords.lon}`
+      `${apiRoot}where/stops-for-location.json?key=${process.env.apiKey}&lat=${coords.lat}&lon=${coords.lon}`
     );
     return data;
   } catch (err) {

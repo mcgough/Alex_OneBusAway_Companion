@@ -1,5 +1,5 @@
 const lib = require("../lib");
-const db = require('../models');
+const db = require("../models");
 const getStopArrivals = lib.getStopArrivalsDepartures;
 const parseArrivals = lib.parseArrivals;
 const createSpeech = lib.createSpeech;
@@ -21,14 +21,14 @@ class IntentResponse {
 const intents = {
   getArrivals: async (stopId, body) => {
     const { Route } = body.request.intent.slots;
-    if (Route.value !== '?') {
+    if (Route.value !== "?") {
       try {
         const data = await getStopArrivals(stopId);
         const parsedData = parseArrivals(data, Route.value);
         return new IntentResponse(
           createSpeech(parsedData),
           { parsedData, stopId },
-          false,
+          false
         );
       } catch (err) {
         return err;
@@ -59,16 +59,17 @@ const intents = {
   },
   setUserStop: async (body, deviceId, userId) => {
     const { StopId } = body.request.intent.slots;
-    const parsedStopId = StopId.value.split('').join(' ');
+    const parsedStopId = StopId.value.split("").join(" ");
     let speech;
-    if (StopId.value !== '?') {
+    if (StopId.value !== "?") {
       try {
         const data = await getStopArrivals(`1_${StopId.value}`);
-        if (!data.arrivalsAndDepartures.length) throw new Error('Could not find stop');
+        if (!data.arrivalsAndDepartures.length)
+          throw new Error("Could not find stop");
         const user = await db.User.findOneAndUpdate(
           { device_id: deviceId },
           { stop_id: StopId.value },
-          { upsert: true },
+          { upsert: true }
         );
         speech = `
           <speak>
@@ -76,15 +77,15 @@ const intents = {
           </speak>`;
         return new IntentResponse(speech, {}, true);
       } catch (err) {
-        console.log('error:', err);
+        console.log("error:", err);
         speech = `
           <speak>
             I could not find a bus stop with the id of ${parsedStopId}.
-          </speak>`
+          </speak>`;
         return new IntentResponse(speech, {}, true);
       }
     }
-  },
+  }
 };
 
 module.exports = intents;
